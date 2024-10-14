@@ -66,9 +66,9 @@ class DrawioFilePlugin(BasePlugin):
         escaped_xml = self.escape_diagram(diagram)
 
         return SUB_TEMPLATE.substitute(xml_drawio=escaped_xml)
-    
+
     def parse_diagram(self, data, alt):
-        if alt == None:
+        if not alt:
             return etree.tostring(data, encoding=str)
 
         mxfile = data.xpath("//mxfile")[0]
@@ -87,7 +87,7 @@ class DrawioFilePlugin(BasePlugin):
                 print(f"Warning: Found {len(page)} results for page name '{alt}'")
         except e:
             print(f"Error: Could not properly parse page name: '{alt}'")
-        
+
         return etree.tostring(mxfile, encoding=str)
 
     def escape_diagram(self, str_xml: str):
